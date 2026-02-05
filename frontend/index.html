@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Library Management System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(circle at top, #1e1e2f, #0b0b12);
+      color: #fff;
+      padding: 40px;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+    }
+
+    p {
+      opacity: 0.7;
+      margin-bottom: 40px;
+    }
+
+    .library {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .book {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 24px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .book:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+
+    .book h2 {
+      font-size: 1.4rem;
+      margin-bottom: 6px;
+    }
+
+    .book span {
+      font-size: 0.9rem;
+      opacity: 0.6;
+    }
+
+    .status {
+      margin: 16px 0;
+      font-weight: 600;
+    }
+
+    .available {
+      color: #4ade80;
+    }
+
+    .unavailable {
+      color: #f87171;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    button:hover {
+      opacity: 0.85;
+      transform: scale(1.02);
+    }
+  </style>
+</head>
+<body>
+
+  <h1>📚 Library System</h1>
+  <p>Frontend simulation integrated with Java backend concept</p>
+
+  <div class="library" id="library"></div>
+
+  <script>
+    const books = [
+      { title: "Clean Code", author: "Robert C. Martin", year: 2008, available: true },
+      { title: "Effective Java", author: "Joshua Bloch", year: 2017, available: true }
+    ];
+
+    const libraryEl = document.getElementById("library");
+
+    function renderBooks() {
+      libraryEl.innerHTML = "";
+
+      books.forEach((book, index) => {
+        const div = document.createElement("div");
+        div.className = "book";
+
+        div.innerHTML = `
+          <h2>${book.title}</h2>
+          <span>${book.author} • ${book.year}</span>
+
+          <div class="status ${book.available ? "available" : "unavailable"}">
+            ${book.available ? "Available" : "Loaned"}
+          </div>
+
+          <button onclick="toggleLoan(${index})">
+            ${book.available ? "Loan Book" : "Return Book"}
+          </button>
+        `;
+
+        libraryEl.appendChild(div);
+      });
+    }
+
+    function toggleLoan(index) {
+      books[index].available = !books[index].available;
+      renderBooks();
+    }
+
+    renderBooks();
+  </script>
+
+</body>
+</html>
